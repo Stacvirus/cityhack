@@ -1,25 +1,19 @@
-const candidateRouter = require("express").Router();
-const candidate = require("../models/candidate");
+const hackathonRouter = require("express").Router();
+const Hackathon = require("../models/hackathon");
 const multer = require("multer");
 const { userExtractor } = require("../utils/middlewares");
+const candidate = require("../models/candidate");
+const hackathon = require("../models/hackathon");
 
 const { PORT, HOST } = process.env;
 
-function candidateRefactoring(savedcandidate) {
-  const link = savedcandidate.image.split(" ").join("%20");
-  // console.log(link);
-  return {
-    header: savedcandidate.header,
-    date: savedcandidate.date,
-    description: savedcandidate.description,
-    tags: savedcandidate.tags,
-    image: `${HOST}${PORT}/${link}`,
-  };
+function imageLinkRefactoring(link) {
+  return `${HOST}${PORT}/${link}`;
 }
 
 const storage = multer.diskStorage({
   destination: (req, file, fn) => {
-    fn(null, "./images/");
+    fn(null, "./images/hackathons");
   },
   filename: (req, file, fn) => {
     fn(null, Date.now() + file.originalname);
@@ -47,100 +41,189 @@ const upload = multer({
   fileFilter: fileFilter,
 });
 
-candidateRouter.post(
+//create an hackathon post
+hackathonRouter.post(
   "/",
-  userExtractor,
-  upload.single("file"),
+  // userExtractor,
+  //upload.single("file"),
   async (req, res, next) => {
-    if (!req.file) return res.json({ error: "invalid file extension" });
-
-    const days = {
-      1: "Monday",
-      2: "Tuesday",
-      3: "Wednesday",
-      4: "Thursday",
-      5: "Friday",
-      6: "Saturday",
-      7: "Suncday",
-    };
+    // if (!req.file) return res.json({ error: "invalid file extension" });
 
     const { body } = req;
     console.log(body);
-    if (!body.description) return res.json({ error: "an input missing!" });
+    if (!body.description || !body.name || !body.dueDate)
+      return res.json({ error: "inputs missing!" });
 
-    let date = new Date();
-    date = `${
-      days[date.getDay()]
-    }, ${date.getDate()} ${date.getMonth()} ${date.getFullYear()}`;
-    const tags = body.tags.split("#");
+    const due = body.dueDate;
+    const date = new Date(due);
 
-    const candidate = new candidate({
+    if (isNaN(date.getTime())) {
+      return res.status(400).json({ error: "invalid date format!" });
+    }
+
+    const hackathon = new Hackathon({
       ...body,
-      tags,
-      date,
-      image: req.file.path,
+      dueDate: date,
+      image: "req.file.path",
     });
 
     try {
-      let savedcandidate = await candidate.save();
-      const refactoredcandidate = candidateRefactoring(savedcandidate);
-      res.send(refactoredcandidate).status(200);
+      let savedHackathon = await hackathon.save();
+
+      res
+        .send({
+          ...savedHackathon.toJSON(),
+          image: imageLinkRefactoring(savedHackathon.image),
+        })
+        .status(200);
     } catch (error) {
       next(error);
     }
   }
 );
 
-candidateRouter.get("/", userExtractor, async (req, res, next) => {
-  console.log("in get candidate router");
+// post winners for an hackathon
+hackathonRouter.post("/winner/:id", userExtractor, async (req, res, next) => {
+  const { id } = req.params;
+  const { user } = req;
+
   try {
-    const allcandidates = await candidate.find();
-    let refactoredcandidates = [];
-    allcandidates.map((b) => {
-      refactoredcandidates = refactoredcandidates.concat(
-        candidateRefactoring(b)
-      );
+    const hackathon = await Hackathon.findById(id);
+
+    hackathon.winners = hackathon.winners.concat(user.id);
+
+    user.won = user.won.concat(hackathon.id);
+
+    await hackathon.save();
+    await user.save();
+    res
+      .send({
+        ...hackathon.toJSON(),
+        image: imageLinkRefactoring(hackathon.image),
+      })
+      .status(200);
+  } catch (error) {
+    next(error);
+  }
+});
+
+//permit user to join an hackathon
+hackathonRouter.post("/join/:id", userExtractor, async (req, res, next) => {
+  const { user } = req;
+  const { id } = req.params;
+
+  try {
+    const hackathon = await Hackathon.findById(id);
+    hackathon.participants = hackathon.participants.concat(user.id);
+    user.hackathons = user.hackathons.concat(hackathon.id);
+
+    await user.save();
+    await hackathon.save();
+
+    res
+      .send({
+        ...hackathon.toJSON(),
+        image: imageLinkRefactoring(hackathon.image),
+      })
+      .status(200);
+  } catch (error) {
+    next(error);
+  }
+});
+
+//permits user to quit and hackathon
+hackathonRouter.post("/quit/:id", userExtractor, async (req, res, next) => {
+  const { user } = req;
+  const { id } = req.params;
+  try {
+    const hackathon = await Hackathon.findById(id);
+    user.hackathons = user.hackathons.filter((h) => h.toString() != id);
+    hackathon.participants = hackathon.participants.filter(
+      (p) => p.toString() != user.id.toString()
+    );
+
+    await hackathon.save();
+    await user.save();
+    res
+      .send({
+        ...hackathon.toJSON(),
+        image: imageLinkRefactoring(hackathon.image),
+      })
+      .status(200);
+  } catch (error) {
+    next(error);
+  }
+});
+
+//get all hackathons
+hackathonRouter.get("/", async (req, res, next) => {
+  console.log("in get hackathon router");
+  try {
+    const allHackathon = await Hackathon.find()
+      .populate("winners", { email: 1, id: 1 })
+      .populate("participants", { email: 1, id: 1 });
+
+    if (!allHackathon)
+      return res.status(404).send({ error: "hackathon list empty!" });
+    let refactoredHackathons = [];
+    allHackathon.map((b) => {
+      refactoredHackathons = refactoredHackathons.concat({
+        ...b.toJSON(),
+        image: imageLinkRefactoring(b.image),
+      });
     });
 
-    res.send(refactoredcandidates);
+    res.send(refactoredHackathons);
   } catch (error) {
     next(error);
   }
 });
 
-candidateRouter.get("/:id", async (req, res, next) => {
+//get a specific hackathon
+hackathonRouter.get("/:id", async (req, res, next) => {
   const { id } = req.params;
-  console.log(req.token);
   try {
-    const candidate = await candidate.findById(id);
-    res.send([candidateRefactoring(candidate)]);
+    const hackathon = await Hackathon.findById(id);
+
+    if (!hackathon) return res.status(404).send({ error: "object not found!" });
+
+    res.send({
+      ...hackathon.toJSON(),
+      image: imageLinkRefactoring(hackathon.image),
+    });
   } catch (error) {
     next(error);
   }
 });
 
-candidateRouter.delete("/:id", userExtractor, async (req, res, next) => {
+//delete a specific hackathon
+hackathonRouter.delete("/:id", userExtractor, async (req, res, next) => {
   const { id } = req.params;
   try {
-    await candidate.findByIdAndDelete(id);
+    await Hackathon.findByIdAndDelete(id);
+
     res.status(200);
   } catch (error) {
     next(error);
   }
 });
 
-candidateRouter.put("/", userExtractor, async (req, res, next) => {
+// modify a specific hackathon
+hackathonRouter.put("/", async (req, res, next) => {
   const { body } = req;
   const { id } = body;
 
   try {
-    const updatedcandidate = await candidate.findByIdAndUpdate(body, id, {
+    const updatedHackathon = await Hackathon.findByIdAndUpdate(body, id, {
       new: true,
     });
-    res.send(candidateRefactoring(updatedcandidate));
+    res.send({
+      ...updatedHackathon.toJSON(),
+      image: imageLinkRefactoring(updatedHackathon.image),
+    });
   } catch (error) {
     next(error);
   }
 });
 
-module.exports = candidateRouter;
+module.exports = hackathonRouter;

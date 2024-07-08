@@ -17,6 +17,7 @@ const app = express();
 const candidateRouter = require("./controllers/candidates");
 const loginRouter = require("./controllers/login");
 // const blogRouter = require("./controllers/blogs");
+const hackathonRouter = require("./controllers/hackathons");
 
 console.log("connecting to", MONGODB_URI);
 mongoose.set("strictQuery", true);
@@ -37,7 +38,7 @@ app.get("/", async (req, res) => {
 
 app.use("/api/candidate", candidateRouter);
 app.use("/api/login", loginRouter);
-// app.use("/api/blogs", blogRouter);
+app.use("/api/hackathons", hackathonRouter);
 
 app.use(unknownEndpoint);
 app.use(errorHandler);
