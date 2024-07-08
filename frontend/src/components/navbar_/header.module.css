@@ -1,0 +1,50 @@
+.navbar {
+}
+
+.container {
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* header section starts */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .logo{
+    font-size: 1.2rem;
+  }
+  /* & form {
+    max-width: 40rem;
+    width: 100%;
+    & input {
+      padding: 0.6rem 1.2rem;
+      font-size: 1.2rem;
+      letter-spacing: 0.02rem;
+      border: 1px solid var(--black-alt1);
+      &:hover {
+        outline: none;
+      }
+      &:focus {
+        outline: none;
+      }
+    }
+  } */
+}
+
+/* navbar section start */
+
+.navbar{
+  .navlink{
+    display: inline-block;
+    margin-right: 0.5rem;
+      font-size: 1.2rem;
+      color: var(--black2);
+      &:hover{
+          transition:  color .3s linear;
+          color: var(--main-clr);
+      }
+  }
+}
