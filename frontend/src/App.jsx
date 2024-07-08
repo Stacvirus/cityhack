@@ -5,6 +5,7 @@ import Favorites from "./pages/favorites";
 import Header from "./components/header";
 import Banner from "./components/banner";
 import Home from "./pages/home";
+import Hackatons from "./pages/hackatons";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/hackatons" element={<Hackatons />} />
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/recipe-item/:id" element={<Details />} />
         </Routes>

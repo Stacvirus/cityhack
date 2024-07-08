@@ -17,10 +17,7 @@ export default function Hero() {
               Discover a thriving future with Ofa&apos;a
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600">
-              Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui
-              lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat
-              fugiat aliqua.- Your digital gateway
-              to excellence.
+              Ofa&apos;a, your digital gateway to excellence accompagnies you towards a fulfilling and enriching career. Come and explore it!
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <a
