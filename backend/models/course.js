@@ -4,26 +4,35 @@ const schema = mongoose.Schema({
   title: {
     type: String,
     required: true,
+    unique: true,
   },
   description: {
     type: String,
     required: true,
   },
   roadMap: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "RoadMap",
+    type: String,
+    default: "/images/roadmaps/not_available_road_map.png",
   },
-  lms: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "LMS",
-  },
-  participants: [
+  lms: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "LMS",
+    },
+  ],
+  // participants: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "Candidate",
+  //   },
+  // ],
+  mentors: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Candidate",
     },
   ],
-  mentors: [
+  graduates: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Candidate",
