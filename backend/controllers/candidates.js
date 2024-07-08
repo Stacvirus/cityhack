@@ -20,4 +20,18 @@ candidateRouter.post("/", async (req, res, next) => {
   }
 });
 
+candidateRouter.get("/:id", async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const findCandidate = await Candidate.findById(id)
+      .populate("won", { name: 1, id: 1 })
+      .populate("hackathons", { name: 1, id: 1 });
+    if (!findCandidate)
+      return res.status(404).json({ error: "condidate not found!" });
+    res.send(findCandidate).status(200);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = candidateRouter;

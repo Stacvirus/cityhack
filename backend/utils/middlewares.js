@@ -45,7 +45,7 @@ async function userExtractor(req, res, next) {
   } catch (error) {
     return next(error);
   }
-  req.use = await Candidate.findById(user.id);
+  req.user = await Candidate.findById(user.id);
   next();
 }
 
