@@ -100,4 +100,4 @@ jobRouter.put("/", async (req, res, next) => {
   }
 });
 
-module.exports = courseRouter;
+module.exports = jobRouter;

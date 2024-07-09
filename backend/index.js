@@ -19,6 +19,7 @@ const loginRouter = require("./controllers/login");
 const courseRouter = require("./controllers/courses");
 const hackathonRouter = require("./controllers/hackathons");
 const lmsRouter = require("./controllers/lms");
+const jobRouter = require("./controllers/jobs");
 
 console.log("connecting to", MONGODB_URI);
 mongoose.set("strictQuery", true);
@@ -42,6 +43,7 @@ app.use("/api/login", loginRouter);
 app.use("/api/hackathons", hackathonRouter);
 app.use("/api/courses", courseRouter);
 app.use("/api/lms", lmsRouter);
+app.use("/api/jobs", jobRouter);
 
 app.use(unknownEndpoint);
 app.use(errorHandler);
