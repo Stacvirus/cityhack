@@ -9,7 +9,7 @@ jobRouter.post(
   async (req, res, next) => {
     const { body } = req;
     console.log(body);
-    if (!body.description || !body.title || !body.location)
+    if (!body.description || !body.title)
       return res.json({ error: "inputs missing!" });
 
     const job = new Job(body);
@@ -85,16 +85,13 @@ jobRouter.delete("/:id", userExtractor, async (req, res, next) => {
 // modify a specific job
 jobRouter.put("/", async (req, res, next) => {
   const { body } = req;
-  const { id } = body;
+  const id = body._id;
 
   try {
-    const updatedCourse = await Course.findByIdAndUpdate(body, id, {
+    const updatedJob = await Job.findByIdAndUpdate(body, id, {
       new: true,
     });
-    res.send({
-      ...updatedCourse.toJSON(),
-      image: imageLinkRefactoring(updatedCourse.image),
-    });
+    res.send(updatedJob);
   } catch (error) {
     next(error);
   }
