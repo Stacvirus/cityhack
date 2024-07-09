@@ -1,6 +1,6 @@
 export default function Pagination() {
   return (
-      <nav aria-label="Page navigation example">
+      <nav aria-label="Page navigation example" className="mx-auto my-8 text-center">
         <ul className="inline-flex -space-x-px text-base h-10">
           <li>
             <a

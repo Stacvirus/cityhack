@@ -22,7 +22,7 @@ export default function GlobalState({ children }) {
         setRecipeList(data?.data?.recipes);
         setLoading(false);
         setSearchParam("");
-        navigate("/");
+        navigate("/hackatons");
       }
       console.log(data);
     } catch (e) {
