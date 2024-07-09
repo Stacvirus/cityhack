@@ -12,7 +12,6 @@ const schema = mongoose.Schema({
   companyName: String,
   location: {
     type: String,
-    required: true,
     default: "Remote",
   },
   createdAt: {

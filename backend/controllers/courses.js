@@ -197,7 +197,7 @@ courseRouter.delete("/:id", userExtractor, async (req, res, next) => {
   }
 });
 
-// modify a specific hackathon
+// modify a specific course
 courseRouter.put("/", async (req, res, next) => {
   const { body } = req;
   const { id } = body;
