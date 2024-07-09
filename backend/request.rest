@@ -1,36 +1,122 @@
-post http://localhost:3000/api/user
+post http://localhost:3000/api/candidate
 Content-Type: application/json
 
 {
-    "email": "stac@gmail.com",
+    "email": "virus@gmail.com",
     "password": "123@123@"
 }
 
 ###
 
-POST http://localhost:3000/api/login
+POST http://localhost:3000/api/login/candidate
 Content-Type: application/json
 
 {
-    "email": "stac@gmail.com",
+    "email": "virus@gmail.com",
     "password": "123@123@"
 }
 
 ###
-post http://localhost:3000/api/blogs
+
+get http://localhost:3000/api/candidate/668bc4322e9201199cd9d4de
+
+
+###
+put http://localhost:3000/api/hackathons
 Content-Type: application/json
 
 {
-    "description": "second rest test with date resolve V2",
-    "tags": "test#code"
+    "name": "cityhack",
+    "description": "the first post hackathon test!",
+    "dueDate": "2024-03-25",
+    "_id": "668be973d181fc73d6d71b97"
+}
+
+###
+delete http://localhost:3000/api/hackathons/668bc4562e9201199cd9d4e1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZpcnVzQGdtYWlsLmNvbSIsImlkIjoiNjY4YmM0MzIyZTkyMDExOTljZDlkNGRlIiwiaWF0IjoxNzIwNDQ1NDk2LCJleHAiOjE3MjA0NDkwOTZ9.I8wtgxdj3cgtzDNf-SJ8lxn8VKPve1RvcwyBR0HD7zU
+
+###
+get http://localhost:3000/api/hackathons
+
+###
+
+//post hackthon winners
+post http://localhost:3000/api/hackathons/winner/668be973d181fc73d6d71b97
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZpcnVzQGdtYWlsLmNvbSIsImlkIjoiNjY4YmM0MzIyZTkyMDExOTljZDlkNGRlIiwiaWF0IjoxNzIwNDQ1NDk2LCJleHAiOjE3MjA0NDkwOTZ9.I8wtgxdj3cgtzDNf-SJ8lxn8VKPve1RvcwyBR0HD7zU
+
+
+# eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN0YWNAZ21haWwuY29tIiwiaWQiOiI2NjhiYTVkMDQ5ZTlkMWE0YjQ2OTkwZmUiLCJpYXQiOjE3MjA0Mjc5OTgsImV4cCI6MTcyMDQzMTU5OH0.EQEmnbFmQi5Yy8woqU8SjnKUyzYNCDiJB3jOYRRiMrU
+
+
+###
+//join an hackathon
+post http://localhost:3000/api/hackathons/join/668be973d181fc73d6d71b97
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZpcnVzQGdtYWlsLmNvbSIsImlkIjoiNjY4YmM0MzIyZTkyMDExOTljZDlkNGRlIiwiaWF0IjoxNzIwNDM1NzY4LCJleHAiOjE3MjA0MzkzNjh9.fjUma9n91Gcv8pQqq8QzWpz4GCqI-3Pqlyz_GKg2c5A
+
+###
+// quit an hackathon
+post http://localhost:3000/api/hackathons/quit/668bc4562e9201199cd9d4e1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZpcnVzQGdtYWlsLmNvbSIsImlkIjoiNjY4YmM0MzIyZTkyMDExOTljZDlkNGRlIiwiaWF0IjoxNzIwNDM1NzY4LCJleHAiOjE3MjA0MzkzNjh9.fjUma9n91Gcv8pQqq8QzWpz4GCqI-3Pqlyz_GKg2c5A
+
+###
+//course tests
+get http://localhost:3000/api/courses
+
+###
+//course tests
+get http://localhost:3000/api/courses/668c30131766632b42ee2bdd
+
+###
+//course tests
+post http://localhost:3000/api/courses
+Content-Type: application/json
+
+{
+    "title": "Backend with Java Spring boot",
+    "description": "here you will learn everything you need to now about backend developement with the java spring boot framework, but we'll first of all dive in the ancestor java spring. So join us to learn one of the most indemand skills in tech industry."
 }
 ###
-get http://localhost:3000/api/blogs
+
+put http://localhost:3000/api/courses
+Content-Type: application/json
+
+{
+    "title": "Backend with ExpressJs",
+    "description": "here you will learn everything you need to now about backend developement with the javaScript Nodejs express library, but we'll first of all dive in the ancestor http create server which is an inbuild method of nodejs. So join us to learn one of the most indemand skills in tech industry.",
+    "_id": "668be3145ce98988a3bb90e9"
+}
 
 ###
-get http://localhost:3000/api/blogs/664322dfc22bf356bddae216
-Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN0YWNAZ21haWwuY29tIiwiaWQiOiI2NjNjODMzMzUyMjUyMzEwNTNmZDNmYWUiLCJpYXQiOjE3MTYxNTI1ODB9.3Z-54py0bgsGobGtA8u6ZTTvoo2trONxTmCOTSuXz9g"
+post http://localhost:3000/api/courses/mentor/668c30131766632b42ee2bdd
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZpcnVzQGdtYWlsLmNvbSIsImlkIjoiNjY4YmM0MzIyZTkyMDExOTljZDlkNGRlIiwiaWF0IjoxNzIwNDYwMDg5LCJleHAiOjE3MjA0NjM2ODl9.tuSJivUT4GUpy3zt1nqvtsXkX5E5ewi6eIwLRVEklfg
+Content-Type: application/json
 
+{
+    "email": "virus@gmail.com"
+}
 
+###
+post http://localhost:3000/api/courses/lms/668c30131766632b42ee2bdd
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZpcnVzQGdtYWlsLmNvbSIsImlkIjoiNjY4YmM0MzIyZTkyMDExOTljZDlkNGRlIiwiaWF0IjoxNzIwNDYwMDg5LCJleHAiOjE3MjA0NjM2ODl9.tuSJivUT4GUpy3zt1nqvtsXkX5E5ewi6eIwLRVEklfg
+Content-Type: application/json
 
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN0YWNAZ21haWwuY29tIiwiaWQiOiI2NjNjODMzMzUyMjUyMzEwNTNmZDNmYWUiLCJpYXQiOjE3MTYxNTEyMTl9.iF0t8guuHhHvWKxU5OrRFEgHaUiJNgmsiKxrQfvjb0o"
+ {
+    "name": "openClass Room"
+ }
+
+###
+post http://localhost:3000/api/lms
+Content-Type: application/json
+
+{
+     "name": "openClass Room",
+     "description": "Des competences d'aujourd'hui qui ont de l'avenir.",
+"link": "https://openclassrooms.com/fr/"
+}
+
+###
+get http://localhost:3000/api/lms
+###
+post http://localhost:3000/api/courses/graduates/668c30131766632b42ee2bdd
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZpcnVzQGdtYWlsLmNvbSIsImlkIjoiNjY4YmM0MzIyZTkyMDExOTljZDlkNGRlIiwiaWF0IjoxNzIwNDYwMDg5LCJleHAiOjE3MjA0NjM2ODl9.tuSJivUT4GUpy3zt1nqvtsXkX5E5ewi6eIwLRVEklfg

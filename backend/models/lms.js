@@ -1,27 +1,31 @@
 const mongoose = require("mongoose");
 
+const validateURL = (url) => {
+  const urlRegex = /^(https?|chrome):\/\/[^\s$.?#].[^\s]*$/;
+  return urlRegex.test(url);
+};
+
 const schema = mongoose.Schema({
   name: {
     type: String,
     required: true,
+    unique: true,
   },
   description: {
     type: String,
     required: true,
   },
-  link: String,
-  participants: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Candidate",
-    },
-  ],
-  graduates: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Candidate",
-    },
-  ],
+  link: {
+    type: String,
+    required: true,
+    validate: [validateURL, "please enter a valid URL"],
+  },
+
+  image: {
+    type: String,
+    default: "/images/lms/lms_default_images.png",
+    required: true,
+  },
 });
 
 schema.set("toJSON", {

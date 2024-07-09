@@ -2,14 +2,7 @@ const hackathonRouter = require("express").Router();
 const Hackathon = require("../models/hackathon");
 const multer = require("multer");
 const { userExtractor } = require("../utils/middlewares");
-const candidate = require("../models/candidate");
-const hackathon = require("../models/hackathon");
-
-const { PORT, HOST } = process.env;
-
-function imageLinkRefactoring(link) {
-  return `${HOST}${PORT}/${link}`;
-}
+const imageLinkRefactoring = require("../utils/imageLink");
 
 const storage = multer.diskStorage({
   destination: (req, file, fn) => {
