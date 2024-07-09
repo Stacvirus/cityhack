@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 export default function SignIn() {
   return (
     <div className="min-h-[80vh] w-full grid content-center p-4">
@@ -71,12 +73,12 @@ export default function SignIn() {
           </button>
           <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
             Not registered?{" "}
-            <a
-              href="#"
+            <NavLink
+              to={"/sign-up"}
               className="text-blue-700 hover:underline dark:text-blue-500"
             >
               Create account
-            </a>
+            </NavLink>
           </div>
         </htmlForm>
       </div>

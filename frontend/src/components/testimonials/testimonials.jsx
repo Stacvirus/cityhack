@@ -6,10 +6,9 @@ export default function Testimonials() {
         <div className="mx-auto max-w-2xl lg:max-w-4xl">
           <img alt="" src="https://tailwindui.com/img/logos/workcation-logo-indigo-600.svg" className="mx-auto h-12" />
           <figure className="mt-10">
-            <blockquote className="text-center text-xl font-semibold leading-8 text-gray-900 sm:text-2xl sm:leading-9">
+            <blockquote className="text-center text-md font-[500] leading-8 text-gray-900 sm:text-2xl sm:leading-9">
               <p>
-                “Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo expedita voluptas culpa sapiente alias
-                molestiae. Numquam corrupti in laborum sed rerum et corporis.”
+                “Get started with our solutions by building amaizing cameroun by giving to young a way to be better.”
               </p>
             </blockquote>
             <figcaption className="mt-10">

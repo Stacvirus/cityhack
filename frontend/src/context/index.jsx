@@ -8,8 +8,28 @@ export default function GlobalState({ children }) {
   const [loading, setLoading] = useState(false);
   const [recipeList, setRecipeList] = useState([]);
   const [recipeDeatailsData, setRecipeDetailsData] = useState(null);
+  // const [users, setUsers] = useState([]);
   const [favoritesList, setFavoritesList] = useState([]);
   const navigate = useNavigate();
+
+  // async function fetchUsers(){
+  //     try {
+  //       setLoading(true);
+  //       const res = await fetch(
+  //         `https://dummyjson.com/users`
+  //       );
+  //       const data = await res.json();
+  //       if (data?.data?.recipes) {
+  //         setUsers(data?.data?.recipes);
+  //         setLoading(false);
+  //       }
+  //       console.log(data);
+  //     } catch (e) {
+  //       console.log(e);
+  //       setLoading(false);
+  //     }
+  // }
+  // fetchUsers()
   async function handleSubmit(event) {
     event.preventDefault();
     try {
@@ -44,6 +64,7 @@ export default function GlobalState({ children }) {
     }
     setFavoritesList(cpyFavoritesList);
   }
+  
   console.log(favoritesList, recipeList);
   useEffect(() => {}, []);
   return (
@@ -58,6 +79,7 @@ export default function GlobalState({ children }) {
         setRecipeDetailsData,
         handleAddToFavorite,
         favoritesList,
+        // users,
       }}
     >
       {children}
