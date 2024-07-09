@@ -9,10 +9,7 @@ const schema = mongoose.Schema({
     type: String,
     required: true,
   },
-  companyName: {
-    type: String,
-    required: true,
-  },
+  companyName: String,
   location: {
     type: String,
     required: true,
@@ -27,7 +24,7 @@ const schema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  recrueted: [
+  seekers: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Candidate",
