@@ -1,5 +1,6 @@
 export default function Profile() {
   return (
+    <div className="min-h-[80vh] w-full grid content-center place-items-center">
     <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <div className="flex justify-end px-4 pt-4">
         <button
@@ -79,5 +80,7 @@ export default function Profile() {
         </div>
       </div>
     </div>
+      
+      </div>
   );
 }

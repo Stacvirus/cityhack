@@ -98,6 +98,11 @@ Dashboard                  </NavLink>
                     Sign out
                   </a>
                 </MenuItem>
+                <MenuItem>
+                  <NavLink to={"/sign-in"} className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
+                    Sign In
+                  </NavLink>
+                </MenuItem>
               </MenuItems>
             </Menu>
           </div>
